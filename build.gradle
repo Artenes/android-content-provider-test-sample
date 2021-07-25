@@ -32,7 +32,8 @@ android {
     useLibrary 'android.test.base'
     //adds MockContentProvider to classpath from android.test.mock package that comes with android SDK
     useLibrary 'android.test.mock'
-
+    //if you compiling against 27 or lower you do not need to add useLibrary calls above
+    //only from api 28 above those classes were removed from the default classpath
     compileSdkVersion 30
 
 }
