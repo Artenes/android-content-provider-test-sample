@@ -35,33 +35,9 @@ android {
 
     compileSdkVersion 30
 
-    defaultConfig {
-        minSdkVersion 29
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-
-        //tells the android plugin to use this class to run the tests, this class comes from androidx.test:runner dependency
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
     //need this because we are using some annotations on provider class
     implementation "androidx.annotation:annotation:1.2.0"
-    //need this because we are using AndroidJUnitRunner to run the tests
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    //need this because we are using AndroidJUnit4 to run instrumentation tests
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
 }
