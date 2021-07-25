@@ -1,0 +1,67 @@
+//tells gradle what to do to setup environment so this build script can run
+//in this case we want to download android plugin and add it to the classpath
+buildscript {
+    //set the repositories where we can find android plugin and its dependencies
+    repositories {
+        google()
+        mavenCentral()
+    }
+    //tells gradle to download and set to classpath the android plugin
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.2'
+    }
+}
+
+//with android plugin setup on class path we can apply it on this script
+//so all android specific functions can be used here
+apply plugin: 'com.android.library'
+
+//the repositories closure above was used only to configure the classpath for the build script itself
+//for the project now we need to setup the repositories we will be using
+repositories {
+    google()
+    mavenCentral()
+}
+
+//android specific configuration provided by android plugin
+android {
+    //libraries added to classpath with useLibrary are being get from Sdk/platforms/android-XX/optional
+    //adds ProviderTestCase2 to classpath from android.test package that comes with android SDK
+    useLibrary 'android.test.runner'
+    //adds AndroidTestCase to classpath from android.test package that comes with android SDK
+    useLibrary 'android.test.base'
+    //adds MockContentProvider to classpath from android.test.mock package that comes with android SDK
+    useLibrary 'android.test.mock'
+
+    compileSdkVersion 30
+
+    defaultConfig {
+        minSdkVersion 29
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        //tells the android plugin to use this class to run the tests, this class comes from androidx.test:runner dependency
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    //need this because we are using some annotations on provider class
+    implementation "androidx.annotation:annotation:1.2.0"
+    //need this because we are using AndroidJUnitRunner to run the tests
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    //need this because we are using AndroidJUnit4 to run instrumentation tests
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+}
